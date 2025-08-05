@@ -15,13 +15,14 @@ export const Button = (props: ButtonProps) => {
   return (
     <button
       onClick={onClick}
-      className={` ${
+      className={`${
         variant === "primary"
           ? "bg-indigo-600 opacity-90 text-white"
           : "bg-indigo-100 text-indigo-500"
-      } w-36 h-10 font-mono rounded-md text-sm `}
+      } w-40 h-11 rounded-md font-semibold text-base cursor-pointer flex items-center justify-center gap-2`}
     >
-      {startIcon} {text}
+      {startIcon}
+      <span>{text}</span>
     </button>
   );
 };
