@@ -13,6 +13,7 @@ interface Data {
   tags: Tag[];
   title: string;
   type: string;
+  updatedAt: Date;
 }
 
 const BrainDump = () => {
@@ -61,6 +62,7 @@ const BrainDump = () => {
               tags={item.tags}
               title={item.title}
               type={item.type}
+              updatedAt={item.updatedAt}
             />
           );
         })}

@@ -9,16 +9,25 @@ interface data {
   tags: Tag[];
   title: string;
   type: string;
+  updatedAt: Date;
 }
 
-const Cards = (props: data) => {
-  const { link, tags, title } = props;
+const Card = (props: data) => {
+  const { link, tags, title, updatedAt } = props;
 
   return (
-    <div className="bg-zinc-50 w-64 h-80 font-onest py-7 px-6">
+    <div className="bg-zinc-50 w-64 h-[330px] font-onest py-7 px-6 rounded-2xl shadow-md">
       <p className="text-xl font-semibold">{title}</p>
       <br />
-      <p>{link}</p>
+      {link.includes("\n") ? (
+        <ul className="list-disc pl-4 text-zinc-800 font-medium">
+          {link.split("\n").map((item, index) => (
+            <li key={index}>{item}</li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-zinc-800 font-medium">{link}</p>
+      )}
       <br />
       <div className="flex gap-2 text-xs">
         {tags.map((tag) => (
@@ -27,8 +36,17 @@ const Cards = (props: data) => {
           </p>
         ))}
       </div>
+      <br />
+      <p className="text-xs text-gray-600">
+        Added on{" "}
+        {new Date(updatedAt).toLocaleDateString("en-GB", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        })}
+      </p>
     </div>
   );
 };
 
-export default Cards;
+export default Card;
