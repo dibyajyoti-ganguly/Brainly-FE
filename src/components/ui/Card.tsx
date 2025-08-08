@@ -16,7 +16,7 @@ const Card = (props: data) => {
   const { link, tags, title, updatedAt } = props;
 
   return (
-    <div className="bg-zinc-50 w-64 h-[330px] font-onest py-7 px-6 rounded-2xl shadow-md">
+    <div className="bg-zinc-50 w-64 font-onest py-7 px-6 rounded-2xl shadow-md">
       <p className="text-xl font-semibold">{title}</p>
       <br />
       {link.includes("\n") ? (

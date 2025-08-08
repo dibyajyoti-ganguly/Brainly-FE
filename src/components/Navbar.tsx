@@ -1,8 +1,11 @@
 import { Button } from "./ui/Button";
 import { LuShare2 } from "react-icons/lu";
 import { IoMdAdd } from "react-icons/io";
+import { useContext } from "react";
+import { OverlayContext } from "../Browse";
 
 const Navbar = () => {
+  const { setShowCard } = useContext(OverlayContext);
   return (
     <div className="flex mt-14 items-center font-onest justify-between">
       <p className="text-3xl font-bold">All Notes</p>
@@ -17,7 +20,7 @@ const Navbar = () => {
           variant="primary"
           text="Add Content"
           startIcon={<IoMdAdd />}
-          onClick={() => {}}
+          onClick={() => setShowCard(true)}
         />
       </div>
     </div>
