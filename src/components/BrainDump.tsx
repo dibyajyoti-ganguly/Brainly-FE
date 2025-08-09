@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import Navbar from "./Navbar";
 import Card from "../components/ui/Card";
-import { useContentContext } from "../utils/contentContext"; // ✅ Use context
+import { useContentContext } from "../utils/ContentContext"; // ✅ Use context
 
 const BrainDump = () => {
   const { list, fetchData } = useContentContext(); // ✅ Same instance as Browse

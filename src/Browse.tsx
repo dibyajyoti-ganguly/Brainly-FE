@@ -2,7 +2,7 @@
 import Sidebar from "./components/Sidebar";
 import BrainDump from "./components/BrainDump";
 import { createContext, useState, useRef } from "react";
-import { useContentContext } from "./utils/contentContext"; // ✅ Use context instead
+import { useContentContext } from "./utils/ContentContext"; // ✅ Use context instead
 
 type OverlayContextType = {
   showCard: boolean;

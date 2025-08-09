@@ -1,3 +1,7 @@
+import { RiDeleteBin5Line } from "react-icons/ri";
+import { IoShareSocialOutline } from "react-icons/io5";
+import { useContentContext } from "../../utils/ContentContext";
+
 interface Tag {
   _id: string;
   title: string;
@@ -13,11 +17,62 @@ interface data {
 }
 
 const Card = (props: data) => {
+  const { fetchData } = useContentContext();
   const { link, tags, title, updatedAt } = props;
+  const token = localStorage.getItem("token");
+
+  const headers: HeadersInit = {
+    "Content-Type": "application/json",
+  };
+  if (token) {
+    headers["Authorization"] = token;
+  }
 
   return (
-    <div className="bg-zinc-50 w-64 font-onest py-7 px-6 rounded-2xl shadow-md">
-      <p className="text-xl font-semibold">{title}</p>
+    <div className="bg-zinc-50 w-72 font-onest py-7 px-6 rounded-2xl shadow-md">
+      <div className="flex justify-between items-center">
+        <p className="text-xl font-semibold">{title}</p>
+        <IoShareSocialOutline
+          className="cursor-pointer"
+          onClick={async () => {
+            const response = await fetch(
+              "http://localhost:3000/api/v1/brain/share",
+              {
+                method: "POST",
+                headers,
+                body: JSON.stringify({
+                  contentName: title,
+                }),
+              }
+            );
+
+            const URL = await response.json();
+
+            if (response.ok) alert(URL.link);
+          }}
+        />
+        <RiDeleteBin5Line
+          className="cursor-pointer"
+          onClick={async () => {
+            const response = await fetch(
+              "http://localhost:3000/api/v1/content",
+              {
+                method: "DELETE",
+                headers,
+                body: JSON.stringify({
+                  link,
+
+                  title,
+                }),
+              }
+            );
+
+            if (response.ok) {
+              await fetchData();
+            }
+          }}
+        />
+      </div>
       <br />
       {link.includes("\n") ? (
         <ul className="list-disc pl-4 text-zinc-800 font-medium">
