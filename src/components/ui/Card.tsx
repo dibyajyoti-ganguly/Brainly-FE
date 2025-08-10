@@ -21,6 +21,8 @@ const Card = (props: data) => {
   const { link, tags, title, updatedAt } = props;
   const token = localStorage.getItem("token");
 
+  const isIframe = link.trim().startsWith("<iframe");
+
   const headers: HeadersInit = {
     "Content-Type": "application/json",
   };
@@ -28,8 +30,10 @@ const Card = (props: data) => {
     headers["Authorization"] = token;
   }
 
+  // Trigger Twitter widget rendering after mounting
+
   return (
-    <div className="bg-zinc-50 w-72 font-onest py-7 px-6 rounded-2xl shadow-md">
+    <div className="bg-zinc-50 w-[270px] font-onest py-7 px-6 rounded-2xl shadow-md">
       <div className="flex justify-between items-center">
         <p className="text-xl font-semibold">{title}</p>
         <IoShareSocialOutline
@@ -40,14 +44,10 @@ const Card = (props: data) => {
               {
                 method: "POST",
                 headers,
-                body: JSON.stringify({
-                  contentName: title,
-                }),
+                body: JSON.stringify({ contentName: title }),
               }
             );
-
             const URL = await response.json();
-
             if (response.ok) alert(URL.link);
           }}
         />
@@ -59,14 +59,9 @@ const Card = (props: data) => {
               {
                 method: "DELETE",
                 headers,
-                body: JSON.stringify({
-                  link,
-
-                  title,
-                }),
+                body: JSON.stringify({ link, title }),
               }
             );
-
             if (response.ok) {
               await fetchData();
             }
@@ -80,13 +75,19 @@ const Card = (props: data) => {
             <li key={index}>{item}</li>
           ))}
         </ul>
+      ) : isIframe ? (
+        <div dangerouslySetInnerHTML={{ __html: link }} />
       ) : (
         <p className="text-zinc-800 font-medium">{link}</p>
       )}
+
       <br />
       <div className="flex gap-2 text-xs">
         {tags.map((tag) => (
-          <p className="bg-indigo-100 text-indigo-500 font-semibold rounded-2xl p-2.5">
+          <p
+            key={tag._id}
+            className="bg-indigo-100 text-indigo-500 font-semibold rounded-2xl p-2.5"
+          >
             {tag.title}
           </p>
         ))}
